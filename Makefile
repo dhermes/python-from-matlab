@@ -26,7 +26,7 @@ foo.c: foo.pyx
 
 libfoo.so: foo.c
 	gcc -shared -pthread -fPIC -fwrapv -O2 -Wall -fno-strict-aliasing \
-	-I/usr/include/python2.7 -o libfoo.so foo.c -lpython2.7 \
+	-I/usr/include/python2.7 -o libfoo.so foo.c -lpython2.7
 
 test: libfoo.so main.c
 	gcc -I/usr/include/python2.7 \
@@ -37,10 +37,12 @@ run_test: test
 	PYTHONPATH="$${PYTHONPATH}:$(PWD)" LD_LIBRARY_PATH=$(PWD) ./test
 
 foo_mex.mexa64: foo_mex.c libfoo.so
-	mex -L$(PWD) $(MEX_EXTRA) -I/usr/include/python2.7 -lpython2.7 -lfoo -ldl foo_mex.c
+	mex -L$(PWD) $(MEX_EXTRA) -I/usr/include/python2.7 \
+	-lpython2.7 -lfoo -ldl foo_mex.c
 
 test_mex: foo_mex.mexa64
-	PYTHONPATH="$${PYTHONPATH}:$(PWD)" LD_LIBRARY_PATH=$(PWD) matlab -nojvm -nodisplay -nosplash -r 'test_mex; exit;'
+	PYTHONPATH="$${PYTHONPATH}:$(PWD)" LD_LIBRARY_PATH=$(PWD) \
+	matlab -nojvm -nodisplay -nosplash -r 'test_mex; exit;'
 
 matlab: foo_mex.mexa64
 	PYTHONPATH="$${PYTHONPATH}:$(PWD)" LD_LIBRARY_PATH=$(PWD) matlab
