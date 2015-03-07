@@ -34,16 +34,16 @@ test: libfoo.so main.c
 	-o test main.c -lfoo -lpython2.7 -ldl
 
 run_test: test
-	LD_LIBRARY_PATH=$(PWD) ./test
+	PYTHONPATH="$${PYTHONPATH}:$(PWD)" LD_LIBRARY_PATH=$(PWD) ./test
 
 foo_mex.mexa64: foo_mex.c libfoo.so
 	mex -L$(PWD) $(MEX_EXTRA) -I/usr/include/python2.7 -lpython2.7 -lfoo -ldl foo_mex.c
 
 test_mex: foo_mex.mexa64
-	LD_LIBRARY_PATH=$(PWD) matlab -nojvm -nodisplay -nosplash -r 'test_mex; exit;'
+	PYTHONPATH="$${PYTHONPATH}:$(PWD)" LD_LIBRARY_PATH=$(PWD) matlab -nojvm -nodisplay -nosplash -r 'test_mex; exit;'
 
 matlab: foo_mex.mexa64
-	LD_LIBRARY_PATH=$(PWD) matlab -nojvm -nodisplay -nosplash
+	PYTHONPATH="$${PYTHONPATH}:$(PWD)" LD_LIBRARY_PATH=$(PWD) matlab
 
 clean:
 	rm -f bar.pyc foo.c foo.h libfoo.so test foo_mex.mexa64
