@@ -11,12 +11,13 @@ int main(void)
     double zap[6] = {1.0, 2.0, 3.0, 4.0, 5.0, 6.0};
     size_t zap_size = 6;
     size_t zap_rows = 3;
+    size_t zap_cols = 2;
 
     int i;
     for (i = 0; i < zap_size; i++) {
         printf("zap[%d] before: %f\n", i, zap[i]);
     }
-    from_waldo(&zap[0], zap_rows);
+    from_waldo(&zap[0], zap_size, zap_rows, zap_cols);
     puts("================================================================");
     for (i = 0; i < zap_size; i++) {
         printf("zap[%d] after: %f\n", i, zap[i]);
