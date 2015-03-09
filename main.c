@@ -8,9 +8,9 @@ int main(void)
     void* handle = dlopen("libpython2.7.so", RTLD_LAZY | RTLD_GLOBAL);
     Py_Initialize();
     initfoo();
-    double zap[7] = {1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0};
-    size_t zap_size = 7;
-    size_t zap_rows = 3; // 3x2 is not quite 7
+    double zap[6] = {1.0, 2.0, 3.0, 4.0, 5.0, 6.0};
+    size_t zap_size = 6;
+    size_t zap_rows = 3;
 
     int i;
     for (i = 0; i < zap_size; i++) {
